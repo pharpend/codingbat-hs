@@ -2,9 +2,7 @@
 
 module Warmup2 where
 
--- |Helper functions
-rdrop n = reverse . drop n . reverse
-rtake n = reverse . take n . reverse
+import Helper
 
 -- |Given a string and a non-negative int n, return a larger string
 -- that is n copies of the original string.

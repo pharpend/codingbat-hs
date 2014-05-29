@@ -71,3 +71,10 @@ comboString :: String -> String -> String
 comboString x y
   | length x <= length y  = x ++ y ++ x
   | otherwise             = y ++ x ++ y
+
+-- |Given 2 strings, return their concatenation, except omit the first
+-- char of each. The strings will be at least length 1.
+nonStart :: String -> String -> String
+nonStart x y = (tail x) ++ (tail y)
+
+-- ... okay, these are all really easy, moving on to the next section.

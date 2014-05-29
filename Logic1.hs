@@ -61,3 +61,62 @@ sortaSum a b
   | sum `elem` [10..19] = 20
   | otherwise           = sum
   where sum = a + b
+
+-- |Given a day of the week encoded as 0=Sun, 1=Mon, 2=Tue, ...6=Sat,
+-- and a boolean indicating if we are on vacation, return a string of
+-- the form "7:00" indicating when the alarm clock should
+-- ring. Weekdays, the alarm should be "7:00" and on the weekend it
+-- should be "10:00". Unless we are on vacation -- then on weekdays it
+-- should be "10:00" and weekends it should be "off".
+alarmClock :: Int -> Bool -> String
+alarmClock day vacation
+  | vacation && weekday = "10:00"
+  | vacation && weekend = "off"
+  | weekday             = "7:00"
+  | otherwise           = "10:00"
+  where weekday = day `elem` [1..5]
+        weekend = day `elem` [0, 6]
+
+-- |The number 6 is a truly great number. Given two int values, a and
+-- b, return true if either one is 6. Or if their sum or difference is
+-- 6. Note: the function Math.abs(num) computes the absolute value of
+-- a number.
+love6 :: Int -> Int -> Bool
+love6 6 _ = True
+love6 _ 6 = True
+love6 x y = (6 == x + y) || (6 == (abs $ x - y))
+
+-- |Given a number n, return true if n is in the range 1..10,
+-- inclusive. Unless "outsideMode" is true, in which case return true
+-- if the number is less or equal to 1, or greater or equal to 10.
+in1to10 :: Int -> Bool -> Bool
+in1to10 x False = x `elem` [1..10]
+in1to10 x True  = not $ in1to10 x False
+
+-- |We'll say a number is special if it is a multiple of 11 or if it
+-- is one more than a multiple of 11. Return true if the given
+-- non-negative number is special.
+specialEleven :: Int -> Bool
+specialEleven = (`elem` [0, 1]) . (`mod` 11) 
+
+-- |Return true if the given non-negative number is 1 or 2 more than a
+-- multiple of 20.
+more20 :: Int -> Bool
+more20 = (`elem` [1,2]) . (`mod` 20)
+
+-- |Return true if the given non-negative number is a multiple of 3 or
+-- 5, but not both.
+old35 :: Int -> Bool
+old35 n = (0 == (n `mod` 3)) /= (0 == (n `mod` 5))
+
+-- |Return true if the given non-negative number is 1 or 2 less than a
+-- multiple of 20. So for example 38 and 39 return true, but 40
+-- returns false.
+less20 :: Int -> Bool
+less20 = (`elem` [18,19]) . (`mod` 20)
+
+-- |Given a non-negative number "num", return true if num is within 2
+-- of a multiple of 10. Note: (a % b) is the remainder of dividing a
+-- by b, so (7 % 5) is 2.
+nearTen :: Int -> Bool
+nearTen = (<= 4) . abs . (`mod` 10) . (+ 2)

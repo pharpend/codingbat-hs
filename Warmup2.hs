@@ -78,3 +78,43 @@ stringX s
 -- 4,5, 8,9 ... so "kittens" yields "kien".
 altPairs :: String -> String
 altPairs s = [s !! i | i <- [0..(length s)], (0 == (i-1) `mod` 4) || (0 == i `mod` 4)]
+
+-- |Suppose the string "yak" is unlucky. Given a string, return a
+-- version where all the "yak" are removed, but the "a" can be any
+-- char. The "yak" strings will not overlap.
+stringYak :: String -> String
+stringYak s
+  | 3 > length s      = s
+  | "yak" == take 3 s = stringYak $ drop 3 s
+  | otherwise         = (++) [head s] $ stringYak $ drop 1 s
+
+-- |Given an array of ints, return the number of times that two 6's
+-- are next to each other in the array. Also count instances where the
+-- second "6" is actually a 7.
+array667 :: [Int] -> Int
+array667 []       = 0
+array667 (6:6:x)  = 1 + array667 (6:x)
+array667 (6:7:x)  = 1 + array667 (7:x)
+array667 s        = array667 $ tail s
+
+-- |Given an array of ints, we'll say that a triple is a value
+-- appearing 3 times in a row in the array. Return true if the array
+-- does not contain any triples.
+noTriples :: [Int] -> Bool
+noTriples s
+  | 3 > (length s)          = True
+  | and $ map (== a) [b, c] = False
+  | otherwise               = True && (noTriples $ tail s)
+  where [a, b, c] = take 3 s
+
+-- |Given an array of ints, return true if it contains a 2, 7, 1
+-- pattern -- a value, followed by the value plus 5, followed by the
+-- value minus 1. Additionally the 271 counts even if the "1" differs
+-- by 2 or less from the correct value.
+has271 :: [Int] -> Bool
+has271 s
+  | 3 > length s                      = False
+  | (5 == (b-a)) && (2 >= adiff a c)  = True
+  | otherwise                         = False || (has271 $ tail s)
+  where adiff a b = abs $ a - b
+        [a, b, c] = take 3 s

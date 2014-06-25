@@ -35,7 +35,7 @@ diff21 n
 -- talking and the hour is before 7 or after 20. Return True if we are
 -- in trouble.
 parrotTrouble :: Bool -> Int -> Bool
-parrotTrouble talking hour = talking && 7>hour && 20<hour
+parrotTrouble talking hour = talking && (7>hour || 20<hour)
 
 -- |Given 2 ints, a and b, return True if one if them is 10 or if
 -- their sum is 10.
